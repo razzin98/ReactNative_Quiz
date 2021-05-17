@@ -1,5 +1,5 @@
 # ReactNative_Quiz
-Archived old project - a mobile application created to check the weather anywhere in the world.
+Archived old project - a mobile quiz application.
 
 ## Technologies
 - JavaScript
