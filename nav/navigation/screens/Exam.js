@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import { useState } from 'react';
-import { Platform, StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView,  FlatList, StatusBar } from 'react-native';
 import { EXAM_1, EXAM_2 } from "../screens/exams_data/Exam01";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NetInfo from "@react-native-community/netinfo";
 
 import QuizStorage from '../QuizStorage'
 import { openDatabase } from 'react-native-sqlite-storage';
@@ -96,21 +97,31 @@ export default class Exam extends Component<Props> {
   }
 	
 	sendResult(points,total,type){
-			return(
-				fetch('http://tgryl.pl/quiz/result', {
-			  method: 'POST',
-			  headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json'
-			  },
-			  body: JSON.stringify({
-				"nick": user,
-				"score": points,
-				"total": total,
-				"type": type,
-			  })
-			})
-			);
+		NetInfo.fetch().then(state => {
+			console.log("Connection type", state.type);
+			console.log("Is connected?", state.isConnected); 
+			if(state.isConnected){
+				return(
+					fetch('http://tgryl.pl/quiz/result', {
+						method: 'POST',
+						headers: {
+							Accept: 'application/json',
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							"nick": user,
+							"score": points,
+							"total": total,
+							"type": type,
+						})
+					})
+				);
+			} else {
+				Alert.alert(
+					'No Internet connection.'
+				)
+			  }
+		});
 	}
 	
 	shuffleDeck = (array) => {

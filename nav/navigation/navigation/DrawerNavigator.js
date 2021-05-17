@@ -1,5 +1,6 @@
 // ./navigation/DrawerNavigator.js
 import React, {Component} from 'react';
+import NetInfo from "@react-native-community/netinfo";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { MainStackNavigator } from "./StackNavigator";
 import { ResultStackNavigator } from "./StackNavigator";
@@ -110,24 +111,35 @@ async function get_out(props){
    }
 	
 	function update_db(props){
-	
-		fetch('http://tgryl.pl/quiz/tests', {
-			method: 'GET'
-		})
-		.then((response) => response.json())
-		.then((responseJson) => {
-			console.log(responseJson);
-			getTest(responseJson)
+		NetInfo.fetch().then(state => {
+			console.log("Connection type", state.type);
+			console.log("Is connected?", state.isConnected); 
+			if(state.isConnected){
+				
+				fetch('http://tgryl.pl/quiz/tests', {
+					method: 'GET'
+				})
+				.then((response) => response.json())
+				.then((responseJson) => {
+					console.log(responseJson);
+					getTest(responseJson)
 
-		})
-		.catch((error) => {
-			console.error(error);
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+				console.log("Database has been updated!");
+				props.navigation.navigate("Main");
+				Alert.alert(
+						'Baza została zaktualizowana.'
+					)
+			} else {
+				Alert.alert(
+					'No Internet connection.'
+				)
+			  }
 		});
-		console.log("Database has been updated!");
-		props.navigation.navigate("Main");
-		Alert.alert(
-				'Baza została zaktualizowana.'
-			)
+			
 	}
 
 function CustomDrawerContent(props) {

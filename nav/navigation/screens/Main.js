@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NetInfo from "@react-native-community/netinfo";
-import { Platform, StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Alert, } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ActivityIndicator from '@react-native-async-storage/async-storage';
 
