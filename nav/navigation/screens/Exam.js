@@ -14,20 +14,14 @@ type Props = {};
 var questions =[];
 const user="AK";
 
-
 export default class Exam extends Component<Props> {
 	constructor({props,route}) {
     super(props);
-	
-
-		
 
 	this.state = {
 		exam:EXAM_1,
 	  question:'',
 	  question_id:0,
-	  //answers: ds.cloneWithRows([]),
-	  //userList:[],
 		answer_1:'',
 		answer_2:'',
 		answer_3:'',
@@ -38,11 +32,10 @@ export default class Exam extends Component<Props> {
 		size:route.params.size,
 		exam_tag:route.params.tag,
     };
-	//this.generateQuestion = this.generateQuestion.bind(this);
-	
 	this.getQuestion();
 	
   }
+  
   getQuestion = () => {
   db.transaction(tx => {
       tx.executeSql(`SELECT * FROM Questions WHERE  test_id=?  ORDER BY id`, [this.state.exam_id], (tx, results) => {
@@ -62,7 +55,7 @@ export default class Exam extends Component<Props> {
         console.log("question:  "+this.state.question_id);
       },
 			(error) => {
-				console.log("@@@@@@@@@@@@@@@@@@@@@@@@"+error.message);
+				console.log("Error fetching the data from the database "+error.message);
 			});
     });
     
@@ -84,10 +77,8 @@ export default class Exam extends Component<Props> {
         for (let i = 0; i < results.rows.length; ++i) {
           temp.push(results.rows.item(i));
           console.log('ANSWER',temp[i]);
-          //console.log('gwqehgweuighewiugw',results.rows.length);
         }
         this.setState({
-          //userList:[temp[0],temp[1],temp[2],temp[3]],
 		  answer_1:temp[0],
 		  answer_2:temp[1],
 		  answer_3:temp[2],
@@ -101,26 +92,6 @@ export default class Exam extends Component<Props> {
   
   componentDidMount() {
 	  console.log("Uruchamiam test o nazwie: "+this.state.exam_name);
-		this.getAnswers();
-  }
-  UNSAFE_componentWillReceiveProps()
-  {
-	  console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&: "+this.state.exam_name);
- 
-			let t=Math.floor(Math.random() * (4 - 0 + 1)) + 0;
-			var names=["Tranzystor bipolarny i polowy", "Moda na sukces", "Wodzowie i dowódcy starożytnego Rzymu", "Jak dobrze znasz ekipę Friza?", "Zagadki matematyczne"];
-			var exam_ids=["5eaefb3b0e44b1621d02ac7f","5eaefb3b0e44b1621d02ac81","5eaefb3b0e44b1621d02ac80","5fd7e4629cc0bd32fcc04d64","5eaefb3b0e44b1621d02ac7e"];
-			var sizes=[15,10,10,5,5];
-			var tags=["elektronika","tv","historia","rozrywka","matematyka"];
-			
-          this.setState({
-			exam_id:exam_ids[t],
-			exam_name:names[t],
-			size:sizes[t],
-			exam_tag:tags[t],
-        }),
-
-		this.getQuestion();
 		this.getAnswers();
   }
 	
@@ -201,7 +172,7 @@ export default class Exam extends Component<Props> {
             </View>
             <View style={styles.row}>
               <Button color="#494949" title='Answer C' onPress={() => {this.operation({navigation},this.state.answer_3) }}/>
-              <Button color="#494949" title='Answer D' onPress={() => {this.operation({navigation},this.state.answer_4) }}/>
+              <Button color="#494949" disabled={this.state.answer_4 === undefined ? true : false} title='Answer D' onPress={() => {this.operation({navigation},this.state.answer_4) }}/>
             </View>
 		  
           </View>

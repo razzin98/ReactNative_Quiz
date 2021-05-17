@@ -1,13 +1,6 @@
 import React, {Component} from 'react';
 import NetInfo from "@react-native-community/netinfo";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TouchableOpacity, FlatList, Alert,
-} from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Alert, } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ActivityIndicator from '@react-native-async-storage/async-storage';
 
@@ -19,9 +12,9 @@ let exam_id;
 type Props = {};
 export default class Main extends Component<Props> {
 	constructor(props) {
+		super(props);
 		QuizStorage.setQuestion_id(0);
 		QuizStorage.setScore(0);
-		super(props);
 		
 		var id_Quiz_numerator = 1;
         var id_Question_numerator = 1;
@@ -50,7 +43,6 @@ export default class Main extends Component<Props> {
     const query = `INSERT INTO Tests (test_id, name, description, level,tag, numberOfTask) VALUES ("${testId}", "${name}", "${description}", "${level}", "${tag}", ${numberOfTasks})`
     return db.executeSql(query, [],
       (trans, results) => {
-        //  console.log("Saved");
       },
       (error) => {
         console.log(error.message);
@@ -62,7 +54,6 @@ export default class Main extends Component<Props> {
     const query = `INSERT INTO Questions (test_id, id, name, quiz_id) VALUES ("${testId}", ${id}, "${name}", ${quiz_id})`
     return db.executeSql(query, [],
       (trans, results) => {
-        //  console.log("Saved");
       },
       (error) => {
         console.log(error.message);
@@ -74,7 +65,6 @@ export default class Main extends Component<Props> {
     const query = `INSERT INTO Answers (test_id, id, name, question_id, is_true) VALUES ("${testId}", ${id}, "${name}", ${question_id}, "${is_true}")`
     return db.executeSql(query, [],
       (trans, results) => {
-        //  console.log("Saved");
       },
       (error) => {
         console.log(error.message);
@@ -148,10 +138,9 @@ export default class Main extends Component<Props> {
 				this.setState({
 					dataSource: temp,
 				});
-				console.log("666666666666666666666666666666");
 			},
 			(error) => {
-				console.log("+++++++++++++++++++++++++++++++++++++++++++"+error.message);
+				console.log(error.message);
 			});
 		}
 		});
@@ -171,18 +160,6 @@ export default class Main extends Component<Props> {
     }
     return array;
 	};
-	
-
-	ExecuteQuery = (sql, params = []) => new Promise((resolve, reject) => {
-    db.transaction((trans) => {
-      trans.executeSql(sql, params, (trans, results) => {
-        resolve(results);
-      },
-        (error) => {
-          reject(error);
-        });
-    });
-  });
 
 	getTest(items) {
 

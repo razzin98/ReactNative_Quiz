@@ -1,25 +1,20 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, ListView, AppRegistry, FlatList} from 'react-native';
 
-//const data = require('../result.json');
-// szerokości 20%, jeśli chcę pokazać wszystko oprócz ID
-// szerokości 16, jeśli chcę pokazać również ID
 type Props = {};
 export default class Result extends Component<Props> {
 	
-	
+	header = [
+		{ id: 0, text: 'Nick' }, 
+		{ id: 1, text: 'Score' },
+		{ id: 2, text: 'Total' },
+		{ id: 3, text: 'Type' },
+		{ id: 4, text: 'Date' },
+		{ id: 5, text: 'ID' }];
 
-		header = [
-			{ id: 0, text: 'Nick' }, 
-			{ id: 1, text: 'Score' },
-			{ id: 2, text: 'Total' },
-			{ id: 3, text: 'Type' },
-			{ id: 4, text: 'Date' },
-			{ id: 5, text: 'ID' }];
-
-		state = {
-			data: ''
-		}
+	state = {
+		data: ''
+	}
 	
 	componentDidMount = () => {
 		fetch('http://tgryl.pl/quiz/results', {
@@ -51,7 +46,7 @@ export default class Result extends Component<Props> {
 							<View style={styles.txt2}><Text>{item.score}</Text></View>
 							<View style={styles.txt2}><Text>{item.total}</Text></View>
 							<View style={styles.txt2}><Text>{item.type}</Text></View>
-							<View style={styles.txt2}><Text>{item.date}</Text></View>
+							<View style={styles.txt2}><Text>{item.createdOn}</Text></View>
 							<View style={styles.txt2}><Text>{item.id}</Text></View>
 						</View>
 					)}

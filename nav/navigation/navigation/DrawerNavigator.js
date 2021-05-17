@@ -7,23 +7,10 @@ import { ExamStackNavigator } from "./StackNavigator";
 import { ExamResultsStackNavigator } from "./StackNavigator";
 import { CommonActions } from '@react-navigation/native';
 
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Image,
-  SaveAreaView,
-  Alert
-} from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, Image, SaveAreaView, Alert } from 'react-native';
 
 
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerItemList, DrawerItem, } from '@react-navigation/drawer';
 
 import { openDatabase } from 'react-native-sqlite-storage';
 var db = openDatabase({ name: "baza.db", createFromLocation : 1 });
@@ -122,7 +109,7 @@ async function get_out(props){
 	 
    }
 	
-	function update_db(){
+	function update_db(props){
 	
 		fetch('http://tgryl.pl/quiz/tests', {
 			method: 'GET'
@@ -137,6 +124,7 @@ async function get_out(props){
 			console.error(error);
 		});
 		console.log("Database has been updated!");
+		props.navigation.navigate("Main");
 		Alert.alert(
 				'Baza została zaktualizowana.'
 			)
@@ -151,7 +139,7 @@ function CustomDrawerContent(props) {
 		</View>
       <DrawerItemList {...props} />
 	  <DrawerItem label="Random exam" onPress={() => get_out(props) } />
-	  <DrawerItem label="Aktualizuj bazę" onPress={() => update_db() } />
+	  <DrawerItem label="Aktualizuj bazę" onPress={() => update_db(props) } />
     </DrawerContentScrollView>
   );
 }
