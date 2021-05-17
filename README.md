@@ -2,7 +2,7 @@
 Archived old project - a mobile application created to check the weather anywhere in the world.
 
 ## Technologies
-- Android Studio
+- JavaScript
 - React Native
 - React Navigation
 - SQLite
