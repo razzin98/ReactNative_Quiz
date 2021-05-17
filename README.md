@@ -23,6 +23,7 @@ To run the application you must:
 
 ## Showcase
 - Displaying and solving the exams.
+
 ![Quiz_Exam](https://user-images.githubusercontent.com/75611423/118502919-70911d80-b72a-11eb-828d-a82775184b9c.gif)
 
 - Displaying results.
